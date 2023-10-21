@@ -41,5 +41,9 @@ public class ProductController {
         productService.deleteProductById(id);
     }
 
+ @GetMapping("/{name}")
+    public List<Product> getProductsByName(@PathVariable String name){
+        return productService.findProductByName(name);
+    }
 
 }
