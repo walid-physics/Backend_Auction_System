@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProductRepo extends JpaRepository<Product, Integer> {
+List<Product> findAllByNameContains(String name);
 
 }
