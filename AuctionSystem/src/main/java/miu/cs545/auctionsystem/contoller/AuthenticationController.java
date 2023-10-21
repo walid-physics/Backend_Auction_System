@@ -40,6 +40,7 @@ public class AuthenticationController {
             //return token
             return ResponseEntity.ok(new AuthResponse(u.getEmail(), token));
         } catch (BadCredentialsException e){
+            System.out.println("User Not Found");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         //failed -> throw unauthorized
@@ -52,6 +53,7 @@ public class AuthenticationController {
             User u = (User) authentication.getPrincipal();
             if(!u.getAuthoritiesList().contains("seller"))
             {
+
                 throw  new BadCredentialsException("UNAUTHORIZED SELLER");
             }
             String token = jwtTokenUtil.generateToken(u);

@@ -8,7 +8,9 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepo extends JpaRepository< User, Integer> {
-    public User getUserByEmail(String email);
+     User getUserByEmailAndActive(String email,Boolean active);
+    User getUserByEmail(String email);
+
 
 
 

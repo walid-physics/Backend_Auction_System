@@ -115,8 +115,9 @@ public class UserServiceImpl implements UserService {
 
         System.setProperty("javax.net.debug", "all");
 
-        sendEmail(email,randomInteger.toString() + "\n"+
-                "Click <a href=\"https://http://localhost:8080/verify/"+ user.getEmail()+"/"+ randomInteger+" \">here</a> to visit Example.com.","checking Code");
+        sendEmail(email,"verification Code For Auction System " + "\n"+
+                randomInteger.toString() + "\n"
+               ,"checking Code");
         VerificationCode verificationCode = new VerificationCode(LocalTime.now(),randomInteger,user);
 
         User savedUser = userRepo.save(user);
@@ -139,7 +140,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User loadUserByEmail(String email){
-        return userRepo.getUserByEmail(email);
+        return userRepo.getUserByEmailAndActive(email,true);
     }
 
     @Override
@@ -170,7 +171,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void verifyAccount(String email, Integer code) {
-        User user = loadUserByEmail(email);
+        User user = userRepo.getUserByEmail(email);
         LocalTime registerTime = verificationCodeService.getVerificationCodeByUser(user).getRegistrationDate();
         if(LocalTime.now().isAfter(registerTime.plusMinutes(10))){
             System.out.println("code expired");
@@ -179,12 +180,13 @@ public class UserServiceImpl implements UserService {
 
         VerificationCode verificationCode = verificationCodeService.getVerificationCodeByUser(user);
         if(verificationCode== null){
-            throw new NullPointerException("the VerificationCode row of this user is null");
+            throw new NullPointerException("the Verification Code row of this user is null");
         }
         if(verificationCode.getCode().equals(code)){
             user.setActive(true);
             userRepo.save(user);
             verificationCodeService.deleteVerificationCodeByUser(user);
+            System.out.println("Verification");
         }
         else{
             System.out.println("Incorrect code");

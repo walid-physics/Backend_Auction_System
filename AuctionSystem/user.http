@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
   "name": "Ibrahim Abu Hdaib",
-  "email": "iabuhdaib6@miu.edu",
+  "email": "iabuhdaib@miu.edu",
   "licenseNumber": 12345,
   "password": "123",
   "address": {
@@ -16,10 +16,14 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:8080/auth/seller/login
+POST http://localhost:8080/auth/customer/login
 Content-Type: application/json
 
 {
   "email": "iabuhdaib@miu.edu",
   "password": "123"
 }
+
+###
+
+PUT  http://localhost:8080/register/verify/iabuhdaib@miu.edu/6326

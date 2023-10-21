@@ -3,10 +3,7 @@ package miu.cs545.auctionsystem.contoller;
 import lombok.RequiredArgsConstructor;
 import miu.cs545.auctionsystem.model.User;
 import miu.cs545.auctionsystem.service.UserService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,6 +19,11 @@ public class UserController {
     @PostMapping("/seller")
     public User addSeller(@RequestBody User user) throws Exception {
         return userService.addCustomer(user);
+    }
+
+    @PutMapping("/verify/{email}/{code}")
+    public void verifyAccount(@PathVariable String email, @PathVariable Integer code){
+        userService.verifyAccount(email,code);
     }
 
 
