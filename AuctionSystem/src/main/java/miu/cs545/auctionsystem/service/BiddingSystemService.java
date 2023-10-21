@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-@Service
+
 public interface BiddingSystemService {
     public void bidOnProduct( Integer userId,  Integer biddingProductId,
                              Double amount);

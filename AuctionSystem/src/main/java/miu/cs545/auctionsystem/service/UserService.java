@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
-@Service
-public interface UserService extends UserDetailsService {
+
+public interface UserService   {
 
 
 
@@ -15,7 +15,9 @@ public interface UserService extends UserDetailsService {
     public User getUserById(Integer id);
 
     public void deleteUserById(Integer id);
-    public User addUser(User user) throws Exception;
+
+    public User addCustomer(User user) throws Exception;
+    public User addSeller(User user) throws Exception;
     public User updateUser(User user);
     public User loadUserByEmail(String email);
 

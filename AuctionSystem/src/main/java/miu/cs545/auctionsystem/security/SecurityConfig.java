@@ -1,62 +1,65 @@
 package miu.cs545.auctionsystem.security;
 
-import miu.cs545.auctionsystem.service.UserService;
+
+
+import lombok.RequiredArgsConstructor;
+import miu.cs545.auctionsystem.filter.JwtTokenFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
-
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
+@EnableWebSecurity(debug = true)
+@RequiredArgsConstructor
 public class SecurityConfig {
 
-/*    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder(){
-        return new BCryptPasswordEncoder();
-    }*/
+    private final UserDetailsService userDetailsService;
+    private final JwtTokenFilter jwtTokenFilter;
 
     @Bean
-    public PasswordEncoder bCryptPasswordEncoder(){
-        return NoOpPasswordEncoder.getInstance();
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.csrf(csrf -> csrf.disable())
+               .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/register/**").permitAll()
+                        .requestMatchers("/auth/**").permitAll()
+//                        .requestMatchers(HttpMethod.POST,"/xx/**").hasAuthority("ADMIN")
+//                        .requestMatchers(HttpMethod.PUT,"/xx/**").hasAuthority("ADMIN")
+//                        .requestMatchers(HttpMethod.DELETE,"/xx/**").hasAuthority("ADMIN")
+//                        .requestMatchers(HttpMethod.GET,"/xx/**").authenticated()
+                        .anyRequest().authenticated())
+                .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        return httpSecurity.build();
     }
 
     @Bean
-    public AuthenticationProvider daoAuthenticationProvider(UserService userService){
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-       // daoAuthenticationProvider.setPasswordEncoder(bCryptPasswordEncoder());
-        daoAuthenticationProvider.setUserDetailsService(userService);
+        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
         return daoAuthenticationProvider;
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.
-
-                authorizeHttpRequests( configurer ->
-                configurer.
-                        requestMatchers(HttpMethod.GET,"/**").anonymous()
-                        .requestMatchers(HttpMethod.POST,"/**").anonymous()
-                        .requestMatchers(HttpMethod.DELETE,"/**").anonymous()
-                        .requestMatchers(HttpMethod.PUT,"/**").anonymous()
-
-
-
-        ).httpBasic(Customizer.withDefaults())
-                .csrf(AbstractHttpConfigurer::disable);
-        //http.httpBasic();
-
-        return http.build();
-
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
     }
-
 
 }

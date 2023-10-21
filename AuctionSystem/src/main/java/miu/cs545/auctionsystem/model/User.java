@@ -2,15 +2,20 @@ package miu.cs545.auctionsystem.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
-@AllArgsConstructor
 @Table(name = "user")
-public class User{
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -64,9 +69,9 @@ public class User{
         this.roles = roles;
     }
 
-    @ManyToMany
+    @ManyToMany(cascade =  CascadeType.MERGE)
     @JoinTable(name = "users_roles")
-    private List<Role> roles;
+    private List<Role> roles = new ArrayList<>();;
     private String email;
 
     private String password;
@@ -78,9 +83,10 @@ public class User{
 
 
 
-    public User() {
-        roles = new ArrayList<>();
-    }
+
+
+
+
 
     public String bcryptEncoderPassword(String password){
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
@@ -124,8 +130,41 @@ public class User{
         this.email = email;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if(roles!=null)
+        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName()))
+                .collect(Collectors.toList());
+        return null;
+    }
+
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return getEmail();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     public void setPassword(String password) {
@@ -155,5 +194,12 @@ public class User{
     public void setLicenseNumber(Integer licenseNumber) {
         this.licenseNumber = licenseNumber;
     }
+    public List<String> getAuthoritiesList() {
+        if(roles!=null)
+        return roles.stream().map(role ->  role.getName())
+                .collect(Collectors.toList());
+        return null;
+    }
+
 
 }

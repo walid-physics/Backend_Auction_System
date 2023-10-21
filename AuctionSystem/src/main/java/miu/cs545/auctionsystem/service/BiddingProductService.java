@@ -4,7 +4,7 @@ import miu.cs545.auctionsystem.model.BiddingProduct;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-@Service
+
 public interface BiddingProductService {
 
     public void bidOnProduct(Integer id);

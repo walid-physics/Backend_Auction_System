@@ -40,7 +40,8 @@ public class TestController {
 
     @PostMapping("/register")
     public User saveUser(@RequestBody User user) throws Exception {
-        return userService.addUser(user);
+        //return userService.addUser(user);
+        return null;
     }
 
     @PutMapping("/verify/{email}/{code}")

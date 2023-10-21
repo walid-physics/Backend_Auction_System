@@ -1,7 +1,10 @@
 package miu.cs545.auctionsystem.service.implService;
 
+import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import miu.cs545.auctionsystem.exceptions.EmailAlreadyExistException;
 import miu.cs545.auctionsystem.model.VerificationCode;
+import miu.cs545.auctionsystem.repository.RoleRepo;
 import miu.cs545.auctionsystem.service.UserService;
 import miu.cs545.auctionsystem.model.Role;
 import miu.cs545.auctionsystem.model.User;
@@ -15,6 +18,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,20 +32,36 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private VerificationCodeService verificationCodeService;
+    private final VerificationCodeService verificationCodeService;
 
-    private JavaMailSender javaMailSender;
+    private final JavaMailSender javaMailSender;
 
-    private UserRepo userRepo;
+    private final UserRepo userRepo;
+    private final RoleRepo roleRepo;
+
+    private  Role customerRole;
+    private Role sellerRole;
+
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepo userRepo, JavaMailSender javaMailSender, VerificationCodeService verificationCodeService){
+    public UserServiceImpl(UserRepo userRepo, JavaMailSender javaMailSender, VerificationCodeService verificationCodeService
+    ,RoleRepo roleRepo,PasswordEncoder passwordEncoder){
         this.userRepo=userRepo;
         this.javaMailSender = javaMailSender;
         this.verificationCodeService=verificationCodeService;
+        this.roleRepo=roleRepo;
+        this.passwordEncoder=passwordEncoder;
+        this.customerRole = roleRepo.findByName("customer");
+        this.sellerRole= roleRepo.findByName("seller");
+
+
     }
+
+
     @Override
     public List<User> getUsers() {
         return userRepo.findAll();
@@ -58,19 +78,37 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User addCustomer(User user) throws Exception {
+        user.setRole(new ArrayList<>());
+        user.getRoles().add (customerRole);
+
+        return addUser(user);
+    }
+
+    @Override
+    public User addSeller(User user) throws Exception {
+        user.setRole(new ArrayList<>());
+        user.getRoles().add(customerRole);
+        user.getRoles().add(sellerRole);
+        return addUser(user);
+    }
+
+
     public User addUser(User user) throws Exception {
         if(user==null){
-            throw new NullPointerException("User is null i can't save them.");
+            throw new NullPointerException("User is null .");
         }
-        user.setRole(new ArrayList<>());
+       // user.setRole(new ArrayList<>());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setActive(false);
         String email = user.getEmail();
-        List<String> usersEmail = userRepo.findAll().stream().map(u -> u.getEmail()).collect(Collectors.toList());
-
-        for(String em: usersEmail){
-            if(usersEmail.equals(user)){
-                throw new EmailAlreadyExistException("Email already exist");
-            }
+        //List<String> usersEmail = userRepo.findAll().stream().map(u -> u.getEmail()).collect(Collectors.toList());
+        User userByEmail = userRepo.getUserByEmail(user.getEmail());
+        if(userByEmail!=null)
+        {
+            throw new EmailAlreadyExistException("Email already exist");
         }
+
 
         Integer randomInteger = new Random().nextInt(9000) + 1000;
         System.out.println("\n"+randomInteger+"\n");
@@ -81,12 +119,12 @@ public class UserServiceImpl implements UserService {
                 "Click <a href=\"https://http://localhost:8080/verify/"+ user.getEmail()+"/"+ randomInteger+" \">here</a> to visit Example.com.","checking Code");
         VerificationCode verificationCode = new VerificationCode(LocalTime.now(),randomInteger,user);
 
-        User user1 = userRepo.save(user);
+        User savedUser = userRepo.save(user);
         verificationCodeService.saveVerificationCode(verificationCode);
-        user.setActive(false);
 
 
-        return user1;
+
+        return savedUser;
     }
 
     @Override
@@ -170,7 +208,7 @@ public class UserServiceImpl implements UserService {
 
     }*/
 
-
+/*
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -183,9 +221,7 @@ public class UserServiceImpl implements UserService {
             , mapRolesToAuthorities(user.getRoles()));
         }
         return null;
-    }
+    }*/
 
-    public Collection<? extends GrantedAuthority> mapRolesToAuthorities(List<Role> roles){
-        return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
-    }
+
 }
