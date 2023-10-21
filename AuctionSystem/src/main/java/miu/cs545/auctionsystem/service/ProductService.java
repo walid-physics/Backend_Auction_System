@@ -13,5 +13,5 @@ public interface ProductService {
     public void deleteProductById(Integer id);
     public Product addProduct(Product product);
     public Product updateProduct(Product product);
-
+ List<Product> findProductByName(String name);
 }
