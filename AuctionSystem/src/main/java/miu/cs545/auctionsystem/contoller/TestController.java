@@ -35,7 +35,7 @@ public class TestController {
 
     @PostMapping("/send")
     public void sendEmail(){
-        userService.sendEmail("chess.pmp@gmail.com","hi","welcome");
+        userService.sendEmail("someEmail","hi","welcome");
     }
 
     @PostMapping("/register")
