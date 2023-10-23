@@ -1,6 +1,7 @@
-package com.example.project.Repository;
+package miu.cs545.auctionsystem.repository;
 
-import com.example.project.Model.Customer;
+
+import miu.cs545.auctionsystem.model.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

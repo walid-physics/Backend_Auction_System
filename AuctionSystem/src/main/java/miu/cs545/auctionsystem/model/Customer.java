@@ -1,4 +1,4 @@
-package com.example.project.Model;
+package miu.cs545.auctionsystem.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

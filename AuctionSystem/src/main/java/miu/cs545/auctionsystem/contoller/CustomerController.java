@@ -1,10 +1,10 @@
-package com.example.project.Controller;
+package miu.cs545.auctionsystem.contoller;
 
-import com.example.project.Model.Customer;
-import com.example.project.Model.Product;
-import com.example.project.Service.Customer.CustomerService;
-import com.example.project.Service.Product.ProductService;
+
+
 import lombok.RequiredArgsConstructor;
+import miu.cs545.auctionsystem.model.Customer;
+import miu.cs545.auctionsystem.service.CustomerService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

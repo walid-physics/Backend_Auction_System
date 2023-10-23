@@ -33,6 +33,9 @@ public class User implements UserDetails {
     @ManyToOne
     private BiddingSystem biddingSystem;
 
+    @OneToMany(mappedBy = "user")
+    private List<BalanceTransaction> balanceTransaction;
+
     public BiddingSystem getBiddingSystem() {
         return biddingSystem;
     }
@@ -81,6 +84,7 @@ public class User implements UserDetails {
     private Address address;
     private Integer licenseNumber;
 
+    private Double  balance;
 
 
 
@@ -201,5 +205,11 @@ public class User implements UserDetails {
         return null;
     }
 
+    public Double getBalance() {
+        return balance;
+    }
 
+    public void setBalance(Double balance) {
+        this.balance = balance;
+    }
 }

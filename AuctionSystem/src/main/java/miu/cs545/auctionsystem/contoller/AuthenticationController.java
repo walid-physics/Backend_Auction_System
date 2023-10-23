@@ -25,20 +25,17 @@ public class AuthenticationController {
 
     private final AuthenticationManager authenticationManager;
     private final JwtTokenUtil jwtTokenUtil;
-    @PostMapping("/customer/login")
+    @PostMapping("/login")
     public ResponseEntity<?> customerLogin(@RequestBody AuthRequest authRequest) {
         try {
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword()));
             User u = (User) authentication.getPrincipal();
-            System.out.println(u.getEmail());
-            if(!u.getAuthoritiesList().contains("customer"))
-            {
-                throw  new BadCredentialsException("UNAUTHORIZED SELLER");
-            }
+
+
             System.out.println(u.getEmail());
             String token = jwtTokenUtil.generateToken(u);
             //return token
-            return ResponseEntity.ok(new AuthResponse(u.getEmail(), token));
+            return ResponseEntity.ok( new AuthResponse(u.getEmail(),u.getName(),u.getAuthoritiesList().contains("seller") ,token));
         } catch (BadCredentialsException e){
             System.out.println("User Not Found");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -58,7 +55,8 @@ public class AuthenticationController {
             }
             String token = jwtTokenUtil.generateToken(u);
             //return token
-            return ResponseEntity.ok(new AuthResponse(u.getEmail(), token));
+
+            return ResponseEntity.ok(new AuthResponse(u.getEmail(),u.getName(),u.getAuthoritiesList().contains("seller") ,token));
         } catch (BadCredentialsException e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }

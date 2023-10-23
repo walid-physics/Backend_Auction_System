@@ -1,9 +1,12 @@
-package com.example.project.Service.Customer;
+package miu.cs545.auctionsystem.service.implService;
 
-import com.example.project.Model.Customer;
-import com.example.project.Model.Product;
-import com.example.project.Repository.CustomerRepository;
+
+
+
 import lombok.RequiredArgsConstructor;
+import miu.cs545.auctionsystem.model.Customer;
+import miu.cs545.auctionsystem.repository.CustomerRepository;
+import miu.cs545.auctionsystem.service.CustomerService;
 import org.springframework.expression.ExpressionException;
 import org.springframework.stereotype.Service;
 

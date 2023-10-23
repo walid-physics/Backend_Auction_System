@@ -1,7 +1,8 @@
-package com.example.project.Service.Customer;
+package miu.cs545.auctionsystem.service;
 
-import com.example.project.Model.Customer;
-import com.example.project.Model.Product;
+
+
+import miu.cs545.auctionsystem.model.Customer;
 
 import java.util.List;
 import java.util.Optional;
