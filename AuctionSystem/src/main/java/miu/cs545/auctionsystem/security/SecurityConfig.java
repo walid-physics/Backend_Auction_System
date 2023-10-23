@@ -35,7 +35,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/register/**").permitAll()
                         .requestMatchers("/auth/**").permitAll()
-//                        .requestMatchers(HttpMethod.POST,"/xx/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST,"/balance/**").hasAuthority("customer")
+                        .requestMatchers( "/products/**").hasAuthority("seller")
 //                        .requestMatchers(HttpMethod.PUT,"/xx/**").hasAuthority("ADMIN")
 //                        .requestMatchers(HttpMethod.DELETE,"/xx/**").hasAuthority("ADMIN")
 //                        .requestMatchers(HttpMethod.GET,"/xx/**").authenticated()

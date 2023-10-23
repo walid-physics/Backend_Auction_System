@@ -17,7 +17,7 @@ public class BalanceTransaction {
 
     private Date transactionDate;
     private double amount;
-    @ManyToOne
+        @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
 

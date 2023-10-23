@@ -1,0 +1,46 @@
+###
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "email": "iabuhdaib@miu.edu",
+  "password": "123"
+}
+###
+
+POST http://localhost:8080/products/addProduct
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyLGlhYnVoZGFpYkBtaXUuZWR1Iiwicm9sZXMiOlsiY3VzdG9tZXIiLCJzZWxsZXIiXSwiaXNzIjoiTUlVIiwiaWF0IjoxNjk4MDk2OTE3LCJleHAiOjE2OTgxMDA1MTd9.WFSHjwyYdh12KQQgSCAIf3-sYZQyMwDoAryz-pOm5Ihoy90ZduuJJik59aqwmoFutc9f52U7EVCmU8u5s310nA
+
+{
+  "categories": [{"id":1}],
+"name": "product1",
+"description": "product1 description",
+"startingPrice" : 100,
+"bidDueDate": "2023-10-25",
+"paymentDueDate": "2023-10-27"
+}
+
+
+###
+
+PUT http://localhost:8080/products/update
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyLGlhYnVoZGFpYkBtaXUuZWR1Iiwicm9sZXMiOlsiY3VzdG9tZXIiLCJzZWxsZXIiXSwiaXNzIjoiTUlVIiwiaWF0IjoxNjk4MDk2NzQ5LCJleHAiOjE2OTgxMDAzNDl9.LuolqTpOMDFxZ26mRVhsGFUb1Ts4wQvZv8aybhqAMx25qYd9PIhr8u-Nbt6Lq40mmi2NyBwg88wQVfEqmPqRPw
+
+{
+  "id": 9,
+  "categories": [{"id":1}],
+  "name": "product9",
+  "description": "product9 description",
+  "startingPrice" : 100,
+  "bidDueDate": "2023-10-25",
+  "paymentDueDate": "2023-10-27"
+}
+
+###
+
+POST http://localhost:8080/products/publish/8
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyLGlhYnVoZGFpYkBtaXUuZWR1Iiwicm9sZXMiOlsiY3VzdG9tZXIiLCJzZWxsZXIiXSwiaXNzIjoiTUlVIiwiaWF0IjoxNjk4MDk2NzQ5LCJleHAiOjE2OTgxMDAzNDl9.LuolqTpOMDFxZ26mRVhsGFUb1Ts4wQvZv8aybhqAMx25qYd9PIhr8u-Nbt6Lq40mmi2NyBwg88wQVfEqmPqRPw
+

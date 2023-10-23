@@ -1,72 +1,47 @@
 package miu.cs545.auctionsystem.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
+import lombok.Data;
+
+import java.util.Date;
+import java.util.List;
 
 @Entity
-//@Inheritance(strategy = InheritanceType.JOINED)
-//@DiscriminatorColumn(name = "type")
+@Data
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
-    private User productOwner;
-
     private String name;
     private String description;
-    private double quantity;
+    private Double quantity;
+
+    private Double  startingPrice;
+    private Double  currentPrice;
+    private Double soldPrice;
+    private Double deposit;
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private Date bidDueDate;
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private Date paymentDueDate;
+    private ProductStatus status;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User winnerCustomer;
+
+
+    @ManyToMany//(cascade = CascadeType.MERGE)
+    private List<Category> categories;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private User productOwner;
 
 
 
-    public Product() {
-    }
 
-    public Product(Integer id, User productOwner, String name, String description, double quantity) {
-        this.id = id;
-        this.productOwner = productOwner;
-        this.name = name;
-        this.description = description;
-        this.quantity = quantity;
-    }
-
-    public User getProductOwner() {
-        return productOwner;
-    }
-
-    public void setProductOwner(User productOwner) {
-        this.productOwner = productOwner;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public double getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(double quantity) {
-        this.quantity = quantity;
-    }
 }

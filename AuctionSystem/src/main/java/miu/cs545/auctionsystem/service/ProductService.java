@@ -7,11 +7,14 @@ import java.util.List;
 
 
 public interface ProductService {
-    public List<Product> getProducts();
-    public Product getProductById(Integer id);
+     List<Product> getProducts();
+     List<Product> getSellerProducts() throws Exception;
+     Product getProductById(Integer id);
 
-    public void deleteProductById(Integer id);
-    public Product addProduct(Product product);
-    public Product updateProduct(Product product);
- List<Product> findProductByName(String name);
+     void deleteProductById(Integer id) throws Exception;
+     Product addProduct(Product product) throws Exception;
+     Product updateProduct(Product product) throws Exception;
+     List<Product> findProductByName(String name);
+
+     Product publishProduct(Integer id) throws Exception;
 }

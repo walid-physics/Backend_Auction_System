@@ -5,5 +5,5 @@ import miu.cs545.auctionsystem.model.User;
 
 public interface BalanceTransactionService {
 
-       BalanceTransaction addToBalance(User user, double amount);
+       BalanceTransaction addToBalance(User user, double amount) throws Exception;
 }
