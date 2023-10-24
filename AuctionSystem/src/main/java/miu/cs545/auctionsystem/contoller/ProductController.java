@@ -17,9 +17,14 @@ public class ProductController {
     private final ProductService productService;
 
 
-    @GetMapping()
-    public List<Product> getALlProducts(){
-        return productService.getProducts();
+    @GetMapping("/seller")
+    public List<Product> getSellerProducts() throws Exception {
+        return productService.getSellerProducts();
+    }
+
+    @GetMapping("/customer")
+    public List<Product> getOpenProducts() throws Exception {
+        return productService.getOpenProducts();
     }
 
     @GetMapping("/{id}")

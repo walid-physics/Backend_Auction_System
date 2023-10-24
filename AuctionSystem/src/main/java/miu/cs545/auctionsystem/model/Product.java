@@ -33,6 +33,7 @@ public class Product {
     private ProductStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private User winnerCustomer;
 
     @OneToOne
@@ -44,6 +45,7 @@ public class Product {
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private User productOwner;
+
 
 
 
