@@ -163,15 +163,15 @@ public class ProductServiceImpl implements ProductService {
                 if (user.getBalance()==null || user.getBalance() < deposit) {
                     throw new Exception("customer  does not have enough balance to make deposit.");
                 }
-                product.setWinnerCustomer(user);
-                product.setCurrentPrice(amount);
-
                 balanceTransactionService.addBidDeposit(user,deposit,product);
-                product=  productRepo.save(product);
             }
+            product.setWinnerCustomer(user);
+            product.setCurrentPrice(amount);
 
 
-           return product;
+            return   productRepo.save(product);
+
+
         }else
         {
             throw new Exception("Product not found.");
