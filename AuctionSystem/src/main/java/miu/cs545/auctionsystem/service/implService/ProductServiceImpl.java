@@ -3,9 +3,11 @@ package miu.cs545.auctionsystem.service.implService;
 import lombok.RequiredArgsConstructor;
 import miu.cs545.auctionsystem.model.ProductStatus;
 import miu.cs545.auctionsystem.model.User;
+import miu.cs545.auctionsystem.service.BalanceTransactionService;
 import miu.cs545.auctionsystem.service.ProductService;
 import miu.cs545.auctionsystem.model.Product;
 import miu.cs545.auctionsystem.repository.ProductRepo;
+import miu.cs545.auctionsystem.service.UserService;
 import miu.cs545.auctionsystem.util.ValidateUserFromToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,8 @@ public class ProductServiceImpl implements ProductService {
 
     private final ValidateUserFromToken validateUserFromToken;
 
+    private final BalanceTransactionService balanceTransactionService;
+
 
     @Override
     public List<Product> getProducts() {
@@ -32,8 +36,20 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> getSellerProducts() throws Exception {
         User user = validateUserFromToken.getUserFromAuthentication();
+        if(user==null || !user.getAuthoritiesList().contains("seller"))
+        {
+            throw new Exception("User not found or not seller");
+        }
         return productRepo.findAllByProductOwnerOrderByBidDueDateDesc(user);
     }
+
+    @Override
+    public List<Product> getOpenProducts() throws Exception {
+
+    return productRepo.findAllByStatusOrderByBidDueDate(ProductStatus.OPEN);
+
+    }
+
 
     @Override
     public Product getProductById(Integer id) {
@@ -123,6 +139,46 @@ public class ProductServiceImpl implements ProductService {
 
         } else
             throw new Exception("Product not found");
+
+    }
+
+    @Override
+    public Product addBid(Integer productId, Double amount) throws Exception {
+        Optional<Product> optProduct = productRepo.findById(productId);
+        if(optProduct.isPresent())
+        {
+            Product product =optProduct.get();
+            User user = validateUserFromToken.getUserFromAuthentication();
+             if(user.getId().equals(product.getProductOwner().getId()))
+                 throw new Exception("Can't add bid from the seller to  same seller product.");
+             if(!product.getStatus().equals(ProductStatus.OPEN))
+                 throw new Exception("Product status not Open");
+            if(product.getBidDueDate().before(new Date()))
+                throw new Exception("Product bid closed by due date");
+            if(product.getCurrentPrice()!=null &&  product.getCurrentPrice() >= amount )
+                throw new Exception("Bid Amount must be grater than current bid amount.");
+
+            if(product.getWinnerCustomer()==null ||  product.getWinnerCustomer().getId()!=user.getId()) {
+                double deposit = product.getStartingPrice() * 0.10;
+                if (user.getBalance()==null || user.getBalance() < deposit) {
+                    throw new Exception("customer  does not have enough balance to make deposit.");
+                }
+                product.setWinnerCustomer(user);
+                product.setCurrentPrice(amount);
+
+                balanceTransactionService.addBidDeposit(user,deposit,product);
+                product=  productRepo.save(product);
+            }
+
+
+           return product;
+        }else
+        {
+            throw new Exception("Product not found.");
+        }
+
+
+
 
     }
 }

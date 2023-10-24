@@ -119,7 +119,7 @@ public class UserServiceImpl implements UserService {
                 randomInteger.toString() + "\n"
                ,"checking Code");
         VerificationCode verificationCode = new VerificationCode(LocalTime.now(),randomInteger,user);
-
+        user.setBalance(0.0);
         User savedUser = userRepo.save(user);
         verificationCodeService.saveVerificationCode(verificationCode);
 

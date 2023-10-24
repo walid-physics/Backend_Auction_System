@@ -8,7 +8,9 @@ import java.util.List;
 
 public interface ProductService {
      List<Product> getProducts();
+
      List<Product> getSellerProducts() throws Exception;
+     List<Product> getOpenProducts() throws Exception;
      Product getProductById(Integer id);
 
      void deleteProductById(Integer id) throws Exception;
@@ -17,4 +19,8 @@ public interface ProductService {
      List<Product> findProductByName(String name);
 
      Product publishProduct(Integer id) throws Exception;
+
+     Product addBid(Integer productId, Double Amount) throws Exception;
+
+
 }

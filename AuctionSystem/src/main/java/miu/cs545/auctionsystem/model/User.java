@@ -30,6 +30,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "productOwner")
     private List<Product> products = new ArrayList<>();
 
+    @OneToMany(mappedBy = "winnerCustomer")
+    private List<Product> WinProducts = new ArrayList<>();
+
     @ManyToOne
     private BiddingSystem biddingSystem;
 
@@ -211,5 +214,13 @@ public class User implements UserDetails {
 
     public void setBalance(Double balance) {
         this.balance = balance;
+    }
+
+    public List<Product> getWinProducts() {
+        return WinProducts;
+    }
+
+    public void setWinProducts(List<Product> winProducts) {
+        WinProducts = winProducts;
     }
 }

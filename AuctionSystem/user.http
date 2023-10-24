@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
   "name": "Ibrahim Abu Hdaib",
-  "email": "iabuhdaib@miu.edu",
+  "email": "ibrahim.naimat@gmail.com",
   "licenseNumber": 12345,
   "password": "123",
   "address": {
@@ -17,19 +17,19 @@ Content-Type: application/json
 
 ###
 
-PUT  http://localhost:8080/register/verify/iabuhdaib@miu.edu/3175
+PUT  http://localhost:8080/register/verify/ibrahim.naimat@gmail.com/2770
 
 ###
 POST http://localhost:8080/auth/login
 Content-Type: application/json
 
 {
-  "email": "iabuhdaib@miu.edu",
+  "email": "ibrahim.naimat@gmail.com",
   "password": "123"
 }
 
 ###
-POST http://localhost:8080/balance/charge/100.10
-Authorization: bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyLGlhYnVoZGFpYkBtaXUuZWR1Iiwicm9sZXMiOlsiY3VzdG9tZXIiLCJzZWxsZXIiXSwiaXNzIjoiTUlVIiwiaWF0IjoxNjk4MDkyMjY2LCJleHAiOjE2OTgwOTU4NjZ9.l8IZiJPvmvfc9GIZYdyEkBRINjWaoKe2oLF1giwzcFgQSpREssTIcpLt1urajbioN66rEg6oF0lIryihyB1xlA
+POST http://localhost:8080/balance/charge/50.50
+Authorization: bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzLGlicmFoaW0ubmFpbWF0QGdtYWlsLmNvbSIsInJvbGVzIjpbImN1c3RvbWVyIl0sImlzcyI6Ik1JVSIsImlhdCI6MTY5ODE3MjM3MSwiZXhwIjoxNjk4MTc1OTcxfQ.YypRsPo9oz-RZ7inwbc9JXWJ6sSdg05qQ9SgMkHT73VV8lyfPqX8ApW3rFOSPJ3yDQAv8SClt5S6VDsExh3_ig
 
 
