@@ -34,6 +34,7 @@ public class SecurityConfig {
         httpSecurity.csrf(csrf -> csrf.disable())
                .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/verify/**").permitAll()
                         .requestMatchers("/register/**").permitAll()
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers(HttpMethod.POST,"/balance/**").hasAuthority("customer")
