@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth")
-@CrossOrigin("http://localhost:3000/")
+@CrossOrigin
 public class AuthenticationController {
 
     private final AuthenticationManager authenticationManager;
@@ -26,7 +26,7 @@ public class AuthenticationController {
     @PostMapping("/login")
     public ResponseEntity<?> customerLogin(@RequestBody AuthRequest authRequest) {
         try {
-            System.out.println("ssssssssssssssssssss");
+
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword()));
             User u = (User) authentication.getPrincipal();
 

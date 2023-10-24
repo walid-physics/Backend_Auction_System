@@ -5,13 +5,20 @@ import miu.cs545.auctionsystem.model.User;
 import miu.cs545.auctionsystem.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/register")
-@CrossOrigin("http://localhost:3000/")
+@CrossOrigin
 public class UserController {
     private final UserService userService;
 
+    @GetMapping
+    public List<User> getAll()
+    {
+       return userService.getUsers();
+    }
     @PostMapping("/customer")
     public User addCustomer(@RequestBody User user) throws Exception {
         return userService.addCustomer(user);
