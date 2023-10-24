@@ -7,10 +7,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
@@ -20,6 +17,14 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
+
+    public List<BalanceTransaction> getBalanceTransaction() {
+        return balanceTransaction;
+    }
+
+    public void setBalanceTransaction(List<BalanceTransaction> balanceTransaction) {
+        this.balanceTransaction = balanceTransaction;
+    }
 
     @OneToMany(mappedBy = "owner")
     private List<BiddingProduct> biddingProductOwned = new ArrayList<>();
@@ -137,9 +142,9 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if(roles!=null)
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName()))
-                .collect(Collectors.toList());
-        return null;
+            return roles.stream().filter(role -> role != null).map(role -> new SimpleGrantedAuthority(role.getName()))
+                    .collect(Collectors.toList());
+        return Collections.singleton(new SimpleGrantedAuthority("customer"));
     }
 
     public String getPassword() {
@@ -200,8 +205,8 @@ public class User implements UserDetails {
     }
     public List<String> getAuthoritiesList() {
         if(roles!=null)
-        return roles.stream().map(role ->  role.getName())
-                .collect(Collectors.toList());
+            return roles.stream().filter(role -> role!=null).map(role ->  role.getName())
+                    .collect(Collectors.toList());
         return null;
     }
 
@@ -211,5 +216,16 @@ public class User implements UserDetails {
 
     public void setBalance(Double balance) {
         this.balance = balance;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", active=" + active +
+                ", address=" + address +
+                ", licenseNumber=" + licenseNumber +
+                '}';
     }
 }

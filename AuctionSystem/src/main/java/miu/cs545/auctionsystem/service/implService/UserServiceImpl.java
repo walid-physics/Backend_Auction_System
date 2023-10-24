@@ -80,7 +80,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User addCustomer(User user) throws Exception {
         user.setRole(new ArrayList<>());
-        user.getRoles().add (customerRole);
+        user.getRoles().add(customerRole);
 
         return addUser(user);
     }
@@ -100,7 +100,7 @@ public class UserServiceImpl implements UserService {
         }
        // user.setRole(new ArrayList<>());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setActive(false);
+        user.setActive(true);
         String email = user.getEmail();
         //List<String> usersEmail = userRepo.findAll().stream().map(u -> u.getEmail()).collect(Collectors.toList());
         User userByEmail = userRepo.getUserByEmail(user.getEmail());
