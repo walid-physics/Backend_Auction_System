@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/balance")
-@CrossOrigin("http://localhost:3000/")
+@CrossOrigin
 public class BalanceController {
 
     private final BalanceTransactionService  balanceTransactionService;
