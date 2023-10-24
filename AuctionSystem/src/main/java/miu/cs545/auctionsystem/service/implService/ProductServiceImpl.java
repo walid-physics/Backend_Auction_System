@@ -32,7 +32,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> getSellerProducts() throws Exception {
         User user = validateUserFromToken.getUserFromAuthentication();
-        return productRepo.findAllByProductOwnerOrderByBidDueDateDesc(user);
+        return productRepo.findAllByProductOwner_IdOrderByBidDueDateDesc(user.getId());
     }
 
     @Override
@@ -125,4 +125,10 @@ public class ProductServiceImpl implements ProductService {
             throw new Exception("Product not found");
 
     }
+
+    @Override
+    public List<Product> findAllByNameContains(String name) {
+        return productRepo.findAllByNameContains(name);
+    }
+
 }

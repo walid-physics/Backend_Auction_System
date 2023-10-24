@@ -1,6 +1,7 @@
 package miu.cs545.auctionsystem.service;
 
 import miu.cs545.auctionsystem.model.Product;
+import miu.cs545.auctionsystem.model.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,4 +18,6 @@ public interface ProductService {
      List<Product> findProductByName(String name);
 
      Product publishProduct(Integer id) throws Exception;
+     List<Product> findAllByNameContains(String name);
+
 }

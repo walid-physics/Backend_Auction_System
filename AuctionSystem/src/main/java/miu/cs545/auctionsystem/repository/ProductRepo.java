@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface ProductRepo extends JpaRepository<Product, Integer> {
 List<Product> findAllByNameContains(String name);
-List<Product> findAllByProductOwnerOrderByBidDueDateDesc(User user);
+List<Product> findAllByProductOwner_IdOrderByBidDueDateDesc(Integer User_id);
 
 }

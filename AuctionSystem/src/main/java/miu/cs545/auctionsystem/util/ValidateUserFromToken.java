@@ -14,10 +14,9 @@ public class ValidateUserFromToken {
 
     public User getUserFromAuthentication() throws Exception {
         String userName= SecurityContextHolder.getContext().getAuthentication().getName();
-
         User user = userService.loadUserByEmail(userName);
         if(user== null)
-            throw  new Exception("User found.");
+            throw  new Exception("User not found.");
         return  user;
     }
 }
