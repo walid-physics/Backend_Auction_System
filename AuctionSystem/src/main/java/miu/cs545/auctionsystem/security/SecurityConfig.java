@@ -56,7 +56,8 @@ public class SecurityConfig {
 //                        .requestMatchers(HttpMethod.DELETE,"/xx/**").hasAuthority("ADMIN")
 //                        .requestMatchers(HttpMethod.GET,"/xx/**").authenticated()
                         .anyRequest().authenticated())
-                .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .cors();
         return httpSecurity.build();
     }
 

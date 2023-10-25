@@ -8,6 +8,10 @@ Content-Type: application/json
 }
 ###
 
+GET http://localhost:8080/products/seller
+Authorization: bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyLGlhYnVoZGFpYkBtaXUuZWR1Iiwicm9sZXMiOlsiY3VzdG9tZXIiLCJzZWxsZXIiXSwiaXNzIjoiTUlVIiwiaWF0IjoxNjk4MjAxNDYxLCJleHAiOjE2OTgyMDUwNjF9.SoAOa8TW5AVYgMdK0HkJqOFR_-b0Jl8K7ONgQwnDSq_nmMCYhUFM-DfUt5oszxdejOv-G00U5J1zvAXzUDyyvg
+
+###
 POST http://localhost:8080/products/addProduct
 Content-Type: application/json
 Authorization: bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyLGlhYnVoZGFpYkBtaXUuZWR1Iiwicm9sZXMiOlsiY3VzdG9tZXIiLCJzZWxsZXIiXSwiaXNzIjoiTUlVIiwiaWF0IjoxNjk4MTk4MTAwLCJleHAiOjE2OTgyMDE3MDB9.jIYoWzFFy3YT0S9GWJsesgQWX8iI7qUVe70hQW4Wvr_xBoViquCAuZzDzsrVLUd_SoR5JPGcMvHMk1ky1DCgAg
