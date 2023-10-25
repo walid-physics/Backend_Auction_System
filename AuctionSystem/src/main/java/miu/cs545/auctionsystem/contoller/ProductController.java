@@ -2,6 +2,7 @@ package miu.cs545.auctionsystem.contoller;
 
 import lombok.RequiredArgsConstructor;
 import miu.cs545.auctionsystem.model.Product;
+import miu.cs545.auctionsystem.model.User;
 import miu.cs545.auctionsystem.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -50,9 +51,11 @@ public class ProductController {
        return productService.publishProduct(id);
     }
 
- @GetMapping("/{name}")
+    @GetMapping("/{name}")
     public List<Product> getProductsByName(@PathVariable String name){
-        return productService.findProductByName(name);
+         return productService.findProductByName(name);
     }
+
+
 
 }

@@ -29,11 +29,15 @@ public class Product {
     private Date bidDueDate;
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date paymentDueDate;
+
     private ProductStatus status;
 
     @ManyToOne
     @JsonIgnore
     private User winnerCustomer;
+
+    @OneToOne
+    private BiddingSystem biddingSystem;
 
 
     @ManyToMany//(cascade = CascadeType.MERGE)
