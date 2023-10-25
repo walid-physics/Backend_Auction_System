@@ -143,6 +143,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<Product> findAllByNameContains(String name) {
+        return null;
+    }
+
+    @Override
     public Product addBid(Integer productId, Double amount) throws Exception {
         Optional<Product> optProduct = productRepo.findById(productId);
         if(optProduct.isPresent())
