@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/products")
-@CrossOrigin
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ProductController {
     private final ProductService productService;
 

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/bidding")
-@CrossOrigin
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class BiddingController
 {
     private final ProductService productService;

@@ -20,10 +20,10 @@ public class BalanceTransaction {
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date transactionDate;
     private double amount;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JsonIgnore
     private User user;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JsonIgnore
     private Product product;
 

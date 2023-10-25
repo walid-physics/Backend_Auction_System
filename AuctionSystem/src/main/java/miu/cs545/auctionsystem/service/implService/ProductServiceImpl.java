@@ -181,4 +181,36 @@ public class ProductServiceImpl implements ProductService {
 
 
     }
+
+    @Override
+    public void closeBids() throws Exception {
+        List<Product> products = productRepo.findAllByBidDueDateBeforeAndStatus(new Date(),ProductStatus.OPEN);
+        for(Product product :products)
+        {
+            System.out.println("close  product id :" + product.getId());
+           balanceTransactionService.refund(product);
+            product.setStatus(ProductStatus.CLOSED);
+            productRepo.save(product);
+
+        }
+    }
+
+    @Override
+    public void PayClosedProduct() throws Exception {
+        List<Product> products = productRepo.findByPaymentDueDateBeforeAndStatus(new Date(),ProductStatus.CLOSED);
+        for(Product product :products)
+        {
+            System.out.println("Pay For product id :" + product.getId());
+            Boolean pay = balanceTransactionService.pay(product);
+            if(pay==true)
+            product.setStatus(ProductStatus.PAID);
+            else
+                product.setStatus(ProductStatus.PENDING);
+
+            productRepo.save(product);
+
+        }
+    }
+
+
 }

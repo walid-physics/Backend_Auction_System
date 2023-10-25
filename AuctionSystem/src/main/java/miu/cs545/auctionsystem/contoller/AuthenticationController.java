@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth")
-@CrossOrigin
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class AuthenticationController {
 
     private final AuthenticationManager authenticationManager;

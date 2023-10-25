@@ -25,20 +25,20 @@ public class Product {
     private Double  currentPrice;
     private Double soldPrice;
     private Double deposit;
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd")//, timezone="America/CID")
     private Date bidDueDate;
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date paymentDueDate;
     private ProductStatus status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JsonIgnore
     private User winnerCustomer;
 
 
     @ManyToMany//(cascade = CascadeType.MERGE)
     private List<Category> categories;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JsonIgnore
     private User productOwner;
 

@@ -21,6 +21,9 @@ public interface ProductService {
      Product publishProduct(Integer id) throws Exception;
 
      Product addBid(Integer productId, Double Amount) throws Exception;
+     void closeBids() throws Exception;
+
+     void PayClosedProduct() throws Exception;
 
 
 }

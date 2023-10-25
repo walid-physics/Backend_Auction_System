@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
   "name": "Ibrahim Abu Hdaib",
-  "email": "ibrahim.naimat@gmail.com",
+  "email": "ibrahim.abuhdaib@gmail.com",
   "licenseNumber": 12345,
   "password": "123",
   "address": {
@@ -29,7 +29,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:8080/balance/charge/50.50
-Authorization: bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzLGlicmFoaW0ubmFpbWF0QGdtYWlsLmNvbSIsInJvbGVzIjpbImN1c3RvbWVyIl0sImlzcyI6Ik1JVSIsImlhdCI6MTY5ODE3MjM3MSwiZXhwIjoxNjk4MTc1OTcxfQ.YypRsPo9oz-RZ7inwbc9JXWJ6sSdg05qQ9SgMkHT73VV8lyfPqX8ApW3rFOSPJ3yDQAv8SClt5S6VDsExh3_ig
+POST http://localhost:8080/balance/charge/200
+Authorization: bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzLGlicmFoaW0ubmFpbWF0QGdtYWlsLmNvbSIsInJvbGVzIjpbImN1c3RvbWVyIl0sImlzcyI6Ik1JVSIsImlhdCI6MTY5ODE4NzM5NCwiZXhwIjoxNjk4MTkwOTk0fQ.Dk614cifuLB_1gN_OOQZfvfA3hy_lVdXszW4HBxxOfgKKoJw2FOe3Yqh7lNfuOGn-JtIrPodHOXEQeIxCBxSlA
 
 

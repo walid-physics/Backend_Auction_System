@@ -1,0 +1,15 @@
+###
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "email": "ibrahim.naimat@gmail.com",
+  "password": "123"
+}
+
+
+###
+
+GET http://localhost:8080/transaction
+Authorization: bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzLGlicmFoaW0ubmFpbWF0QGdtYWlsLmNvbSIsInJvbGVzIjpbImN1c3RvbWVyIl0sImlzcyI6Ik1JVSIsImlhdCI6MTY5ODE5MDMxNCwiZXhwIjoxNjk4MTkzOTE0fQ.az-HI143PTBdkEeIXHvO78WMl4UwgGGfNGX5rMydn1klj5ii0bjT5g7gxVbcEjaWSLvrzE9N2GiMU2jNQgEvoQ
+Content-Type: application/json
