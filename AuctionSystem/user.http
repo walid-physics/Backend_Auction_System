@@ -1,9 +1,9 @@
-POST http://localhost:8080/register/customer
+POST http://localhost:8080/register/seller
 Content-Type: application/json
 
 {
   "name": "Ibrahim Abu Hdaib",
-  "email": "ibrahim.abuhdaib@gmail.com",
+  "email": "test@gmail.com",
   "licenseNumber": 12345,
   "password": "123",
   "address": {

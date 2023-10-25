@@ -36,8 +36,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> getSellerProducts() throws Exception {
         User user = validateUserFromToken.getUserFromAuthentication();
+        System.out.println(user.getUsername());
         if(user==null || !user.getAuthoritiesList().contains("seller"))
         {
+            System.out.println(user.getUsername() + " seller not found" );
             throw new Exception("User not found or not seller");
         }
         return productRepo.findAllByProductOwnerOrderByBidDueDateDesc(user);
